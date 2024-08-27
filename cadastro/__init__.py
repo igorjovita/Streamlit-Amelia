@@ -1,0 +1,1 @@
+from .cadastros import Cadastros

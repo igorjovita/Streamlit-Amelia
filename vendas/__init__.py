@@ -1,0 +1,1 @@
+from .vendas import Vendas
