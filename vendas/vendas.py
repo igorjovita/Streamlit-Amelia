@@ -26,7 +26,7 @@ class Vendas:
         df['Faturamento'] = df['Faturamento'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
         df['Lucro'] = df['Lucro'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
 
-        st.data_editor(df, hide_index=True)
+        st.dataframe(df, hide_index=True)
 
     
     def formulario_vendas(self):
