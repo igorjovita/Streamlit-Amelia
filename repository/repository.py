@@ -204,6 +204,23 @@ class Repository:
         self.db.disconnect()
         return resultado
     
+    def select_estoque(self):
+        cursor = self.db.connect()
+        cursor.execute("""
+        SELECT
+            p.nome,
+            SUM(CASE WHEN e.tipo_movimento = 'ENTRADA' THEN e.quantidade ELSE -e.quantidade END) as quantidade,
+            p.custo_unidade
+        FROM produtos as p 
+        JOIN estoque_produtos as e ON p.id = e.id_produto 
+        group by p.nome              
+                       
+        """)
+
+        resultado = cursor.fetchall()
+        self.db.disconnect()
+        return resultado
+    
     def select_custo_receita_produto(self, id_produto):
         cursor = self.db.connect()
 

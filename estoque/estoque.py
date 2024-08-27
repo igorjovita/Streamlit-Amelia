@@ -71,18 +71,11 @@ class Estoque:
 
         st.text('Produtos')
 
-        select_quantidade_produtos = self.repository.select_quantidade_estoque()
+        select_quantidade_produtos = self.repository.select_estoque()
 
-        df = pd.DataFrame(select_quantidade_produtos, columns=['Lote', 'Nome', 'Quantidade', 'Custo', 'Produção', 'Validade'])
-        df['Produção'] = pd.to_datetime(df['Produção'])
-        df['Produção'] = df['Produção'].dt.strftime('%d/%m/%Y')
+        df = pd.DataFrame(select_quantidade_produtos, columns=['Nome', 'Quantidade', 'Custo'])
 
-        df['Validade'] = pd.to_datetime(df['Validade'])
-        df['Validade'] = df['Validade'].dt.strftime('%d/%m/%Y')
-
-        df = df[df['Quantidade'] > 0]            
-
-        st.table(df)
+        st.dataframe(df, hide_index=True, use_container_width=True)
 
         
 
