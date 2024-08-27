@@ -1,6 +1,7 @@
 streamlit
 babel
 pandas
+pkgconfig
+mysqlclient~=2.2.0
 mysql-connector-python
 pykg-config
-mysqlclient
