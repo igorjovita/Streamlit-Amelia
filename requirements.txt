@@ -1,4 +1,6 @@
 streamlit
 babel
 pandas
-mysql
+mysql-connector-python
+pykg-config
+mysqlclient
