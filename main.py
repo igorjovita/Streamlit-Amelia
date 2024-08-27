@@ -7,6 +7,9 @@ from cadastro import Cadastros
 from receitas import Receitas
 from vendas import Vendas
 
+
+st.set_page_config(layout='wide')
+
 st.write("""
 # Sistema de controle de vendas
 """)
