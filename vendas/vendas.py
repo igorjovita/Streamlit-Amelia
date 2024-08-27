@@ -19,14 +19,14 @@ class Vendas:
     
     def historico_vendas(self):
         historico = self.repository.select_historico_vendas()
-        df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Quantidade', 'Faturamento', 'Lucro'])
+        df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Vendas', 'Faturamento', 'Lucro'])
 
         df['Data'] = pd.to_datetime(df['Data'])
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
         df['Faturamento'] = df['Faturamento'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
         df['Lucro'] = df['Lucro'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
 
-        st.data_editor(df, hide_index=True, width=300)
+        st.data_editor(df, hide_index=True)
 
     
     def formulario_vendas(self):
