@@ -22,7 +22,7 @@ class Vendas:
         df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Vendas', 'Faturamento', 'Lucro'])
 
         df['Data'] = pd.to_datetime(df['Data'])
-        df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
+        df['Data'] = df['Data'].dt.strftime('%d/%m')
         df['Faturamento'] = df['Faturamento'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
         df['Lucro'] = df['Lucro'].apply(lambda x:format_currency(x, 'BRL', locale='pt_BR'))
 
