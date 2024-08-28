@@ -19,6 +19,7 @@ class Vendas:
     
     def historico_vendas(self):
         historico = self.repository.select_historico_vendas()
+        st.write(historico)
         df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Vendas', 'Faturamento', 'Lucro'])
 
         df['Data'] = pd.to_datetime(df['Data'])
