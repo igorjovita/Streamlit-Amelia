@@ -52,12 +52,11 @@ class Vendas:
         if produtos_diferentes != '0':
             with st.form('Formulario Venda'):
                 for i in range (int(produtos_diferentes)):
-                
-                    col1, col2 = st.columns(2)
-                    
                     
                     st.selectbox('Produto', lista_nome_produto, index=None, key=f'produto_vendido {i}')
-                        
+                   
+                    col1, col2 = st.columns(2)
+    
                     with col1:
                         st.text_input('Quantidade', key=f'quantidade_vendida {i}')
 
