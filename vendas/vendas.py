@@ -2,6 +2,16 @@ import streamlit as st
 import pandas as pd
 from babel.numbers import format_currency
 
+st.write('''<style>
+
+[data-testid="column"] {
+    width: calc(33.3333% - 1rem) !important;
+    flex: 1 1 calc(33.3333% - 1rem) !important;
+    min-width: calc(33% - 1rem) !important;
+}
+
+</style>''', unsafe_allow_html=True)
+
 class Vendas:
 
     def __init__(self, repository) -> None:
@@ -19,7 +29,6 @@ class Vendas:
     
     def historico_vendas(self):
         historico = self.repository.select_historico_vendas()
-        st.write(historico)
         df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Vendas', 'Faturamento', 'Lucro'])
 
         df['Data'] = pd.to_datetime(df['Data'])
