@@ -261,7 +261,8 @@ class Repository:
             SUM(v.preco_unitario),
             SUM(v.lucro)
         FROM vendas as v
-        JOIN condominio as c ON c.id = v.id_condominio""")
+        JOIN condominio as c ON c.id = v.id_condominio
+        GROUP BY c.nome """)
 
         resultado = cursor.fetchall()
         self.db.disconnect()
