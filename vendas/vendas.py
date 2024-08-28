@@ -31,14 +31,7 @@ class Vendas:
     
     def formulario_vendas(self):
 
-        st.write('''<style>
-        [data-testid="column"] {
-            width: calc(33.3333% - 1rem) !important;
-            flex: 1 1 calc(33.3333% - 1rem) !important;
-            min-width: calc(33% - 1rem) !important;
-        }
 
-        </style>''', unsafe_allow_html=True)
         select_info_produto, lista_nome_produto = self.buscar_receita()
         select_condominio, lista_nome_condominio = self.buscar_condominio()
 
@@ -52,16 +45,18 @@ class Vendas:
             with st.form('Formulario Venda'):
                 for i in range (int(produtos_diferentes)):
                 
-                    col1, col2, col3 = st.columns(3)
+                    col1, col2 = st.columns(2)
                     
-                    with col1:
-                        st.selectbox('Produto', lista_nome_produto, index=None, key=f'produto_vendido {i}')
+                    
+                    st.selectbox('Produto', lista_nome_produto, index=None, key=f'produto_vendido {i}')
                         
-                    with col2:
+                    with col1:
                         st.text_input('Quantidade', key=f'quantidade_vendida {i}')
 
-                    with col3:
+                    with col2:
                         st.text_input('Valor da venda', key=f'valor_venda {i}')
+                    
+                    st.write('---')
 
                 if st.form_submit_button('Lançar venda'):
                     
