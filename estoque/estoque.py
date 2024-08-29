@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from babel.numbers import format_currency
 
 class Estoque:
 
@@ -74,6 +75,9 @@ class Estoque:
         select_quantidade_produtos = self.repository.select_estoque()
 
         df = pd.DataFrame(select_quantidade_produtos, columns=['Nome', 'Quantidade', 'Custo'])
+        df['Custo'] = df['Custo'].apply(lambda x: format_currency(x, 'BRL', locale= 'pt_BR'))
+
+
 
         st.dataframe(df, hide_index=True, use_container_width=True)
 
