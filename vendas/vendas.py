@@ -153,5 +153,5 @@ class Vendas:
 
         df.insert(0, '#', [False] * len(df))
 
-        st.data_editor(df)
+        st.data_editor(df, hide_index=True)
 
