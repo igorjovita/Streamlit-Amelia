@@ -276,7 +276,8 @@ class Repository:
         select
             v.data_venda,
             p.nome,
-            v.quantidade
+            v.quantidade,
+            v.preco_unitario
         from vendas as v
         join produtos as p ON p.id = v.id_produto
         order by v.data_venda desc limit 15""")
