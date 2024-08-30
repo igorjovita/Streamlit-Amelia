@@ -28,11 +28,14 @@ class Agendar:
 
         ano = st.selectbox('Escolha o ano', options=['2024', '2025', '2026'], index=None)
 
+        data1 = st.date_input(data)
+
         condominio = st.selectbox('Condominio', lista_nome_condominio, index=None)
 
         if st.button('Agendar'):
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
             for dia in dias_agendar:
+                st.write(data1)
                 data = tuple(f'{ano}-{mes}-{dia}')
                 self.repository.insert_agendamento_condominio(data, id_condominio)
             
