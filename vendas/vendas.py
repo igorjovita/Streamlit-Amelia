@@ -149,9 +149,14 @@ class Vendas:
 
         select_ultimas_vendas = self.repository.select_ultimas_vendas()
 
+        if 'df_status' not in st.session_state:
+            st.session_state.df_status = None
         df = pd.DataFrame(select_ultimas_vendas, columns=['Data', 'Produto', 'Qtd'])
 
         df.insert(0, '#', [False] * len(df))
 
-        st.data_editor(df, hide_index=True)
+        st.session_state.df_status = st.data_editor(df, hide_index=True)
+
+        if len(st.session_state.df_status.loc[st.session_state.df_status['#']]) > 0:
+            st.write(st.session_state.df_status.loc[st.session_state.df_status['#'], 'Data'].to_list())
 
