@@ -28,7 +28,7 @@ class Agendar:
 
         ano = st.selectbox('Escolha o ano', options=['2024', '2025', '2026'], index=None)
 
-        data1 = st.date_input(data)
+        data1 = st.date_input('data')
 
         condominio = st.selectbox('Condominio', lista_nome_condominio, index=None)
 
