@@ -56,7 +56,7 @@ class Agendar:
     def buscar_agendamentos(self):
         select_agendamentos = self.repository.select_agendamento_condominio()
 
-        df = pd.DataFrame(select_agendamentos, columns=['Data', 'Condominio'])
+        df = pd.DataFrame(select_agendamentos, columns=['Data', 'Dia', 'Condominio'])
 
         df['Data'] = pd.to_datetime(df['Data'])
 
