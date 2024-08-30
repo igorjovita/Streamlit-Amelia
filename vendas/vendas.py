@@ -15,6 +15,12 @@ class Vendas:
         
         st.subheader('Lançar Venda')
         self.formulario_vendas()
+
+        st.write('---')
+
+        st.subheader('Editar Registros')
+
+        self.mostrar_ultimas_vendas()
     
     
     def historico_vendas(self):
