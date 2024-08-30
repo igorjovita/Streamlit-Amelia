@@ -6,7 +6,7 @@ from estoque import Estoque
 from cadastro import Cadastros
 from receitas import Receitas
 from vendas import Vendas
-
+from agendar import Agendar
 
 st.set_page_config(layout='wide')
 
@@ -27,18 +27,22 @@ receitas = Receitas(repository)
 
 vendas = Vendas(repository)
 
+agendamento = Agendar(repository)
 
 st.sidebar.write( """
 ## Amelia Doces Gourmet
 """)
 
-escolha = st.sidebar.radio('Paginas', ['Vendas', 'Compras', 'Cadastros', 'Receitas', 'Estoque'], label_visibility='hidden')
+escolha = st.sidebar.radio('Paginas', ['Vendas', 'Compras', 'Agendamentos', 'Cadastros', 'Receitas', 'Estoque'], label_visibility='hidden')
 
 if escolha == 'Compras':
     ingredientes.pagina_compras()
 
 if escolha == 'Estoque':
     estoque.pagina_estoque()
+
+if escolha == 'Agendamentos':
+    agendamento.pagina_agendar()
 
 if escolha == 'Cadastros':
     cadastro.pagina_cadastro()
