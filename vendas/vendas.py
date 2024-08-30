@@ -166,7 +166,7 @@ class Vendas:
             lista_produtos = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Produto'].to_list()
             lista_quantidades = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Qtd'].to_list()
             lista_preco = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Preço'].to_list()
-            index_selecionado = st.session_state.df_status.loc[st.session_state.df_status['#']].index().to_list()
+            index_selecionado = st.session_state.df_status.loc[st.session_state.df_status['#']].index()
             select_info_produto, lista_nome_produto = self.buscar_receita()
 
             i = 0
