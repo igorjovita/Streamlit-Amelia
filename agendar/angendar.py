@@ -34,7 +34,9 @@ class Agendar:
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
             for dia in dias_agendar:
 
-                self.repository.agendar_condominios(datetime(dia, mes, ano), id_condominio)
+                self.repository.insert_agendamento_condominio(datetime(dia, mes, ano), id_condominio)
+            
+            st.success('Datas agendadas com sucesso!')
 
     
     def buscar_condominio(self):
