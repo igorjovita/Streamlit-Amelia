@@ -53,6 +53,8 @@ class Agendar:
 
         df = pd.DataFrame(select_agendamentos, columns=['Data', 'Condominio'])
 
+        df['Data'] = pd.to_datetime(df['Data'])
+
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
 
 
