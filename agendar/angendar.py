@@ -58,4 +58,4 @@ class Agendar:
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
 
 
-        st.dataframe(df, hide_index=True)
+        st.dataframe(df, hide_index=True, use_container_width=True)
