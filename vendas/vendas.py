@@ -149,7 +149,7 @@ class Vendas:
 
         select_ultimas_vendas = self.repository.select_ultimas_vendas()
 
-        df = pd.DataFrame(select_ultimas_vendas, columns=['Data', 'Produto', 'Quantidade'])
+        df = pd.DataFrame(select_ultimas_vendas, columns=['Data', 'Produto', 'Qtd'])
 
         df.insert(0, '#', [False] * len(df))
 
