@@ -33,8 +33,8 @@ class Agendar:
         if st.button('Agendar'):
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
             for dia in dias_agendar:
-
-                self.repository.insert_agendamento_condominio(datetime.date(int(ano), int(mes), int(dia)), id_condominio)
+                data = (datetime.date(int(ano), int(mes), int(dia)), )
+                self.repository.insert_agendamento_condominio(data, id_condominio)
             
             st.success('Datas agendadas com sucesso!')
 
