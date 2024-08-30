@@ -169,12 +169,13 @@ class Vendas:
             for data, nome_produto, quantidade, preco in zip(lista_datas, lista_produtos, lista_quantidades, lista_preco):
                 i += 1
 
+                index_produto = lista_nome_produto.index(nome_produto)
                 st.date_input('Data', value=data, key=f'data_editar{i}')
 
                 col1, col2, col3 = st.columns(3)
                 
                 with col1:
-                    st.selectbox('Produto', lista_nome_produto, value=nome_produto, key=f'produto_editar{i}')
+                    st.selectbox('Produto', lista_nome_produto, index=index_produto, key=f'produto_editar{i}')
                 
                 with col2:
                     st.text_input('Quantidade', value=quantidade, key=f'quantidade_editar{i}')
