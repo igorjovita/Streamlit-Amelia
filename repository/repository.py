@@ -78,10 +78,10 @@ class Repository:
         self.db.disconnect()
 
     
-    def insert_agendamento_condominio(self, data, id_condominio):
+    def insert_agendamento_condominio(self, data, dia_da_semana, id_condominio):
         cursor = self.db.connect()
 
-        cursor.execute("INSERT INTO agendamento_condominios (data_agendamento, id_condominio) VALUES (%s, %s)", (data, id_condominio))
+        cursor.execute("INSERT INTO agendamento_condominios (data_agendamento, dia_da_semana, id_condominio) VALUES (%s, %s, %s)", (data, dia_da_semana, id_condominio))
 
     # SELECTS
     def select_ingredientes(_self):

@@ -1,7 +1,7 @@
 import streamlit as st
 import datetime
 import pandas as pd
-
+import locale
 class Agendar:
 
     def __init__(self, repository) -> None:
@@ -32,9 +32,14 @@ class Agendar:
 
         if st.button('Agendar'):
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
+            
+
+            # Configura o locale para português do Brasil
+            locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
             for dia in dias_agendar:
                 data = datetime.date(int(ano), int(mes), int(dia))
-                self.repository.insert_agendamento_condominio(data, id_condominio)
+                dia_da_semana = data.strftime('%A')
+                self.repository.insert_agendamento_condominio(data, dia_da_semana, id_condominio)
             
             st.success('Datas agendadas com sucesso!')
 
