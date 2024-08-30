@@ -77,6 +77,12 @@ class Repository:
 
         self.db.disconnect()
 
+    
+    def insert_agendamento_condominio(self, data, id_condominio):
+        cursor = self.db.connect()
+
+        cursor.execute("INSERT INTO agendamento_condominios (data_agendamento, id_condominio) VALUES (%s, %s)", data, id_condominio)
+
     # SELECTS
     def select_ingredientes(_self):
         cursor = _self.db.connect()
@@ -282,6 +288,22 @@ class Repository:
         from vendas as v
         join produtos as p ON p.id = v.id_produto
         order by v.data_venda desc limit 15""")
+
+        resultado = cursor.fetchall()
+        self.db.disconnect()
+        return resultado
+    
+
+    def select_agendamento_condominio(self):
+        cursor = self.db.connect()
+
+        cursor.execute("""
+        SELECT
+            a.data,
+            c.nome
+        FROM agendamento_condominios as a
+        JOIN condominio as c ON c.id = a.id_condominio
+        """)
 
         resultado = cursor.fetchall()
         self.db.disconnect()

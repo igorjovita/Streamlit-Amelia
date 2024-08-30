@@ -1,6 +1,6 @@
 import streamlit as st
-from streamlit_calendar import calendar
-
+import datetime
+import pandas as pd
 
 class Agendar:
 
@@ -8,65 +8,49 @@ class Agendar:
         self.repository = repository
 
     def pagina_agendar(self):
+
+        st.subheader('Agendamentos')
+        self.buscar_agendamentos()
+
+        st.write('---')
+
+        st.subheader('Agendar')
+
+        self.agendar_condominio()
         
-        st.multiselect('Escolha os dias', options=['01', '02', '03', '04', '05'])
-        st.date_input('Data')
+    
+    def agendar_condominio(self):
+        select_condominio, lista_nome_condominio =  self.buscar_condominio()
+        
+        dias_agendar = st.multiselect('Escolha os dias', options=['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'])
+        
+        mes = st.selectbox('Escolha o mês', options=['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'], index=None)
 
-        calendar_options = {
-            "editable": "true",
-            "selectable": "true",
-            "headerToolbar": {
-                "left": "today prev,next",
-                "center": "title",
-                "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
-            },
-            "slotMinTime": "06:00:00",
-            "slotMaxTime": "18:00:00",
-            "initialView": "resourceTimelineDay",
-            "resourceGroupField": "building",
-            "resources": [
-                {"id": "a", "building": "Building A", "title": "Building A"},
-                {"id": "b", "building": "Building A", "title": "Building B"},
-                {"id": "c", "building": "Building B", "title": "Building C"},
-                {"id": "d", "building": "Building B", "title": "Building D"},
-                {"id": "e", "building": "Building C", "title": "Building E"},
-                {"id": "f", "building": "Building C", "title": "Building F"},
-            ],
-        }
-        calendar_events = [
-            {
-                "title": "Event 1",
-                "start": "2023-07-31T08:30:00",
-                "end": "2023-07-31T10:30:00",
-                "resourceId": "a",
-            },
-            {
-                "title": "Event 2",
-                "start": "2023-07-31T07:30:00",
-                "end": "2023-07-31T10:30:00",
-                "resourceId": "b",
-            },
-            {
-                "title": "Event 3",
-                "start": "2023-07-31T10:40:00",
-                "end": "2023-07-31T12:30:00",
-                "resourceId": "a",
-            }
-        ]
-        custom_css="""
-            .fc-event-past {
-                opacity: 0.8;
-            }
-            .fc-event-time {
-                font-style: italic;
-            }
-            .fc-event-title {
-                font-weight: 700;
-            }
-            .fc-toolbar-title {
-                font-size: 2rem;
-            }
-        """
+        ano = st.selectbox('Escolha o ano', options=['2024', '2025', '2026'], index=None)
 
-        calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css)
-        st.write(calendar)
+        condominio = st.selectbox('Condominio', lista_nome_condominio, index=None)
+
+        if st.button('Agendar'):
+            id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
+            for dia in dias_agendar:
+
+                self.repository.agendar_condominios(datetime(dia, mes, ano), id_condominio)
+
+    
+    def buscar_condominio(self):
+
+        select_condominio = self.repository.select_condominio()
+
+        lista_nome_condominio = [condominio[1] for condominio in select_condominio]
+
+        return select_condominio, lista_nome_condominio
+        
+    
+    def buscar_agendamentos(self):
+        select_agendamentos = self.repository.select_agendamento_condominio()
+
+        df = pd.DataFrame(select_agendamentos, columns=['Data', 'Condominio'])
+
+        df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
+
+        st.dataframe(df, hide_index=True)

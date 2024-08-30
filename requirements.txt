@@ -5,4 +5,4 @@ pkgconfig
 mysqlclient~=2.2.0
 mysql-connector-python
 pykg-config
-streamlit-calendar
+datetime
