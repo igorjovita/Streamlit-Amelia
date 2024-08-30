@@ -297,6 +297,10 @@ class Repository:
     def update_custo_ingrediente(self, custo_medida, id_ingrediente):
         cursor = self.db.connect()
         cursor.execute("UPDATE ingredientes SET custo_medio_por_medida = %s where id = %s", (custo_medida, id_ingrediente))
+
+    def update_venda(self, data_editada, id_produto, quantidade_editada, preco_editado, id_venda):
+        cursor = self.db.connect()
+        cursor.execute('UPDATE vendas SET data_venda = %s, id_produto = %s, quantidade = %s, preco_unitario = %s where id = %s', (data_editada, id_produto, quantidade_editada, preco_editado, id_venda))
     
  
 

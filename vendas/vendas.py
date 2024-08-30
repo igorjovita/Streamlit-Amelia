@@ -169,23 +169,39 @@ class Vendas:
             index_selecionado = st.session_state.df_status.loc[st.session_state.df_status['#']].index.to_list()
             select_info_produto, lista_nome_produto = self.buscar_receita()
 
-            i = 0
+            contador = 0
             for data, nome_produto, quantidade, preco, index in zip(lista_datas, lista_produtos, lista_quantidades, lista_preco, index_selecionado):
-                i += 1
-                st.write(index)
+                contador += 1
                 st.write(lista_id[index])
                 index_produto = lista_nome_produto.index(nome_produto)
-                st.date_input('Data', value=data, key=f'data_editar{i}')
+                st.date_input('Data', value=data, key=f'data_editar{contador}')
 
                 col1, col2, col3 = st.columns(3)
                 
                 with col1:
-                    st.selectbox('Produto', lista_nome_produto, index=index_produto, key=f'produto_editar{i}')
+                    st.selectbox('Produto', lista_nome_produto, index=index_produto, key=f'produto_editar{contador}')
                 
                 with col2:
-                    st.text_input('Quantidade', value=quantidade, key=f'quantidade_editar{i}')
+                    st.text_input('Quantidade', value=quantidade, key=f'quantidade_editar{contador}')
                 
                 with col3:
-                    st.text_input('Preco', value=preco, key=f'preco_editar{i}')
+                    st.text_input('Preco', value=preco, key=f'preco_editar{contador}')
+                
+                st.text_input('Id', lista_id[index], key=f'id {contador}', disabled=True)
 
                 st.write('---')
+
+            if st.button('Atualizar'):
+
+                for i in range(contador):
+                    data_editada = st.session_state[f'data_editar {i}']
+                    produto_editado = st.session_state[f'produto_editar {i}']
+                    quantidade_editada = st.session_state[f'quantidade_editar {i}']
+                    preco_editado = st.session_state[f'preco_editar {i}']
+                    id_venda = st.session_state[f'id {i}']
+                    id_produto = select_info_produto[lista_produtos.index(produto_editado)][0]
+
+
+                    self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, id_venda)
+
+
