@@ -12,8 +12,6 @@ class Agendar:
         st.multiselect('Escolha os dias', options=['01', '02', '03', '04', '05'])
         st.date_input('Data')
 
-        
-
         calendar_options = {
             "editable": "true",
             "selectable": "true",
