@@ -151,6 +151,7 @@ class Vendas:
 
         if 'df_status' not in st.session_state:
             st.session_state.df_status = None
+       
         df = pd.DataFrame(select_ultimas_vendas, columns=['Id', 'Data', 'Produto', 'Qtd', 'Preço'])
         lista_id = df['Id'].to_list()
         
@@ -165,13 +166,13 @@ class Vendas:
             lista_produtos = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Produto'].to_list()
             lista_quantidades = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Qtd'].to_list()
             lista_preco = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Preço'].to_list()
-
+            index_selecionado = st.session_state.df_status.loc[st.session_state.df_status['#']].index().to_list()
             select_info_produto, lista_nome_produto = self.buscar_receita()
 
             i = 0
-            for data, nome_produto, quantidade, preco in zip(lista_datas, lista_produtos, lista_quantidades, lista_preco):
+            for data, nome_produto, quantidade, preco, index in zip(lista_datas, lista_produtos, lista_quantidades, lista_preco, index_selecionado):
                 i += 1
-
+                st.write(index)
                 index_produto = lista_nome_produto.index(nome_produto)
                 st.date_input('Data', value=data, key=f'data_editar{i}')
 
