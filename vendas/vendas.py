@@ -154,7 +154,7 @@ class Vendas:
         df = pd.DataFrame(select_ultimas_vendas, columns=['Id', 'Data', 'Produto', 'Qtd', 'Preço'])
         lista_id = df['Id'].to_list()
         
-        df.drop(columns='Id')
+        df = df.drop(columns='Id')
         
         df.insert(0, '#', [False] * len(df))
 
