@@ -274,6 +274,7 @@ class Repository:
 
         cursor.execute("""
         select
+            v.id,
             v.data_venda,
             p.nome,
             v.quantidade,

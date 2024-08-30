@@ -151,8 +151,11 @@ class Vendas:
 
         if 'df_status' not in st.session_state:
             st.session_state.df_status = None
-        df = pd.DataFrame(select_ultimas_vendas, columns=['Data', 'Produto', 'Qtd', 'Preço'])
-
+        df = pd.DataFrame(select_ultimas_vendas, columns=['Id', 'Data', 'Produto', 'Qtd', 'Preço'])
+        lista_id = df['Id'].to_list()
+        
+        df.drop('Id')
+        
         df.insert(0, '#', [False] * len(df))
 
         st.session_state.df_status = st.data_editor(df, hide_index=True)
