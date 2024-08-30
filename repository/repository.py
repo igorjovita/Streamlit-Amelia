@@ -269,6 +269,23 @@ class Repository:
         return resultado
     
 
+    def select_ultimas_vendas(self):
+        cursor = self.db.connect()
+
+        cursor.execute("""
+        select
+            v.data_venda,
+            p.nome,
+            v.quantidade
+        from vendas as v
+        join produtos as p ON p.id = v.id_produto
+        order by v.data_venda desc limit 15""")
+
+        resultado = cursor.fetchall()
+        self.db.disconnect()
+        return resultado
+            
+
     def update_custos_receita(self, custo_total, custo_unitario, id_produto):
 
         cursor = self.db.connect()

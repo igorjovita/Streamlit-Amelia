@@ -136,5 +136,16 @@ class Vendas:
 
     def insert_estoque_produto(self, id_produto, id_lote, quantidade, custo):
         self.repository.insert_estoque_produto(id_produto, id_lote, 'SAIDA', quantidade, custo)
+    
 
+
+    def mostrar_ultimas_vendas(self):
+
+        select_ultimas_vendas = self.repository.select_ultimas_vendas()
+
+        df = pd.DataFrame(select_ultimas_vendas, columns=['Data', 'Produto', 'Quantidade'])
+
+        df.insert(0, '#', [False] * len(df))
+
+        st.data_editor(df)
 
