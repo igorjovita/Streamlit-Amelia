@@ -162,5 +162,12 @@ class Vendas:
             lista_produtos = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Produto'].to_list()
             lista_quantidades = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Qtd'].to_list()
 
+            i = 0
             for data, nome_produto, quantidade in zip(lista_datas, lista_produtos, lista_quantidades):
-                st.write(data, nome_produto, quantidade)
+                i += 1
+                
+                st.date_input('Data', value=data, key=f'data_editar{i}')
+                st.text_input('Produto', value=nome_produto, key=f'produto_editar{i}')
+                st.text_input('Quantidade', value=quantidade, key=f'quantidade_editar{i}')
+
+                st.write('---')
