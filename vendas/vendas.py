@@ -108,7 +108,7 @@ class Vendas:
             id_produto = select_info_produto[index_produto][0]
             custo = float(select_info_produto[index_produto][2]) * quantidade_vendida
 
-            if valor is None:
+            if valor == '':
                 valor = 0
 
             id_venda = self.repository.insert_vendas(id_produto, id_condominio, quantidade_vendida, valor, custo, float(valor) - float(custo), data)
