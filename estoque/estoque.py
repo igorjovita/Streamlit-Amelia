@@ -32,17 +32,12 @@ class Estoque:
 
         if st.button('Lançar no sistema'):
 
-            select_producao = self.repository.select_registros_producao()
-
-            for registro in select_producao:
-                self.repository.insert_registro_producao(registro[1], registro[2], registro[4], registro[5])
-
-            #custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita)
+            custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita)
             
 
-            #st.warning(f'Custo Total : {custo_total} ')
-            #st.warning(f'Custo Unitario : {custo_unitario}')
-            #st.success('Produção lançada com sucesso!')
+            st.warning(f'Custo Total : {custo_total} ')
+            st.warning(f'Custo Unitario : {custo_unitario}')
+            st.success('Produção lançada com sucesso!')
 
     
     def preparar_dados_producao(self, lista_receita, select_receitas, rendimento, data, receita):
@@ -55,18 +50,16 @@ class Estoque:
         
         st.write(custo_total)
         st.write(custo_unitario)
-
-        id_lote = int(self.repository.select_ultimo_id_lote(id_produto)[0]) + 1
         
-        self.registrar_producao(id_produto, id_lote, data, rendimento, custo_total, custo_unitario)
+        self.registrar_producao(id_produto, data, rendimento, custo_total, custo_unitario)
 
         return custo_total, custo_unitario
             
 
 
-    def registrar_producao(self, id_produto, id_lote, data, rendimento, custo_total, custo_unitario):
-        id_producao = self.repository.insert_registro_producao(id_produto, id_lote, data, rendimento, custo_total)
-        self.repository.insert_estoque_produto( id_produto, id_lote, 'ENTRADA', rendimento, custo_unitario)
+    def registrar_producao(self, id_produto, data, rendimento, custo_total, custo_unitario):
+        id_producao = self.repository.insert_registro_producao(id_produto, data, rendimento, custo_total)
+        self.repository.insert_estoque_produto( id_produto, 'ENTRADA', rendimento, custo_unitario, data, id_producao)
         self.repository.update_custos_receita(custo_total, custo_unitario, id_produto)
 
     

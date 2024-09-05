@@ -90,12 +90,6 @@ class Repository:
         cursor.execute("INSERT INTO agendamento_condominios (data_agendamento, dia_da_semana, id_condominio) VALUES (%s, %s, %s)", (data, dia_da_semana, id_condominio))
 
     # SELECTS
-    def select_registros_producao(self):
-        cursor = self.db.connect()
-        cursor.execute("SELECT * FROM registro_producao")
-        resultado = cursor.fetchall()
-        self.db.disconnect()
-        return resultado
 
 
     def select_ingredientes(_self):
@@ -183,16 +177,6 @@ class Repository:
         return resultado
         
     
-    def select_ultimo_id_lote(self, id_produto):
-
-        cursor = self.db.connect()
-
-        cursor.execute("SELECT COALESCE(MAX(id_lote),0) FROM registro_producao WHERE id_produto = %s", (id_produto, ))
-
-        resultado = cursor.fetchone()
-        self.db.disconnect()
-        return resultado
-    
 
     def select_quantidade_estoque(self):
         cursor = self.db.connect()
@@ -210,12 +194,12 @@ class Repository:
                 rp.id_lote,
                 rp.id_produto,
                 SUM(CASE WHEN e.tipo_movimento = 'ENTRADA' THEN e.quantidade ELSE -e.quantidade END) as quantidade
-            FROM registro_producao as rp
+            FROM registros_producao as rp
             JOIN estoque_produtos as e ON e.id_produto = rp.id_produto AND e.id_lote = rp.id_lote
             GROUP BY rp.id_lote, rp.id_produto
         ) AS subquery
         JOIN produtos as p ON p.id = subquery.id_produto
-        JOIN registro_producao as rp ON rp.id_lote = subquery.id_lote AND rp.id_produto = subquery.id_produto
+        JOIN registros_producao as rp ON rp.id_lote = subquery.id_lote AND rp.id_produto = subquery.id_produto
         ORDER BY subquery.id_produto;
 
         """)
