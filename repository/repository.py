@@ -92,11 +92,11 @@ class Repository:
     # SELECTS
 
 
-    def select_ingredientes(_self):
-        cursor = _self.db.connect()
+    def select_ingredientes(self):
+        cursor = self.db.connect()
         cursor.execute('SELECT id, nome, unidade FROM ingredientes')
         resultado = cursor.fetchall()
-        _self.db.disconnect()
+        self.db.disconnect()
         return resultado
     
     def select_mercado(_self):
