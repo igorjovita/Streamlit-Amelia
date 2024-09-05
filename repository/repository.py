@@ -56,9 +56,9 @@ class Repository:
         cursor.execute('INSERT INTO condominio (nome, endereco, administrador, tel_administrador) VALUES (%s, %s, %s, %s)',(nome, endereco, nome_administrador, telefone_administrador))
         self.db.disconnect()
 
-    def insert_estoque_produto(self, id_produto, id_lote, tipo_movimento, quantidade, custo_unitario):
+    def insert_estoque_produto(self, id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data):
         cursor = self.db.connect()
-        cursor.execute("INSERT INTO estoque_produtos (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario) VALUES (%s, %s, %s, %s, %s)", (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario))
+        cursor.execute("INSERT INTO estoque_produtos (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data_movimento) VALUES (%s, %s, %s, %s, %s)", (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data))
 
         self.db.disconnect()
 

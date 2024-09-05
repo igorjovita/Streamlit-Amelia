@@ -113,7 +113,7 @@ class Vendas:
             lista_id_lote = self.obter_lote_e_quantidade(id_produto, quantidade_vendida)
 
             for info in lista_id_lote:
-                self.insert_estoque_produto(id_produto, info[0], info[1], custo)
+                self.insert_estoque_produto(id_produto, info[0], info[1], custo, data)
 
     
     def obter_lote_e_quantidade(self, id_produto, quantidade_vendida):
@@ -140,8 +140,8 @@ class Vendas:
         return lista_id_lote
 
 
-    def insert_estoque_produto(self, id_produto, id_lote, quantidade, custo):
-        self.repository.insert_estoque_produto(id_produto, id_lote, 'SAIDA', quantidade, custo)
+    def insert_estoque_produto(self, id_produto, id_lote, quantidade, custo, data):
+        self.repository.insert_estoque_produto(id_produto, id_lote, 'SAIDA', quantidade, custo, data)
     
 
 
