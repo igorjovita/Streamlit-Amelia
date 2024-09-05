@@ -75,7 +75,7 @@ class Repository:
             (id_produto, id_condominio, quantidade, preco_unitario, custo_unitario, lucro, data_venda) 
             VALUES (%s, %s, %s, %s, %s, %s, %s)""",(id_produto, id_condominio, quantidade, valor, custo, lucro, data))
 
-        id_venda = cursor.lastrowid()
+        id_venda = cursor.lastrowid
         self.db.disconnect()
 
         return id_venda
