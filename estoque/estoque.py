@@ -20,7 +20,6 @@ class Estoque:
     def pagina_lancar_producao(self):
 
         st.subheader('Lançar Produção')
-
         select_receitas = self.repository.select_nome_receitas()
         lista_receita = [receita[1] for receita in select_receitas]
 
@@ -33,12 +32,17 @@ class Estoque:
 
         if st.button('Lançar no sistema'):
 
-            custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita)
+            select_producao = self.repository.select_registros_producao()
+
+            for registro in select_producao:
+                self.repository.insert_registro_producao(registro[1], registro[2], registro[4], registro[5])
+
+            #custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita)
             
 
-            st.warning(f'Custo Total : {custo_total} ')
-            st.warning(f'Custo Unitario : {custo_unitario}')
-            st.success('Produção lançada com sucesso!')
+            #st.warning(f'Custo Total : {custo_total} ')
+            #st.warning(f'Custo Unitario : {custo_unitario}')
+            #st.success('Produção lançada com sucesso!')
 
     
     def preparar_dados_producao(self, lista_receita, select_receitas, rendimento, data, receita):
@@ -61,7 +65,7 @@ class Estoque:
 
 
     def registrar_producao(self, id_produto, id_lote, data, rendimento, custo_total, custo_unitario):
-        self.repository.insert_registro_producao(id_produto, id_lote, data, rendimento, custo_total)
+        id_producao = self.repository.insert_registro_producao(id_produto, id_lote, data, rendimento, custo_total)
         self.repository.insert_estoque_produto( id_produto, id_lote, 'ENTRADA', rendimento, custo_unitario)
         self.repository.update_custos_receita(custo_total, custo_unitario, id_produto)
 

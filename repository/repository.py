@@ -62,10 +62,12 @@ class Repository:
 
         self.db.disconnect()
 
-    def insert_registro_producao(self, id_produto, id_lote, data, rendimento, custo_total):
+    def insert_registro_producao(self, id_produto, data, rendimento, custo_total):
         cursor = self.db.connect()
-        cursor.execute("INSERT INTO registro_producao (id_produto, id_lote, data_producao, data_validade, rendimento, custo_total) VALUES (%s, %s, %s, CURDATE() + INTERVAL 30 DAY, %s, %s)", (id_produto, id_lote, data, rendimento, custo_total))
+        cursor.execute("INSERT INTO registros_producao (id_produto, data_producao, data_validade, rendimento, custo_total) VALUES (%s, %s, CURDATE() + INTERVAL 30 DAY, %s, %s)", (id_produto, data, rendimento, custo_total))
+        id_producao = cursor.lastrowid
         self.db.disconnect()
+        return id_producao
 
     def insert_vendas(self, id_produto, id_condominio, quantidade, valor, custo, lucro, data):
 
@@ -88,6 +90,14 @@ class Repository:
         cursor.execute("INSERT INTO agendamento_condominios (data_agendamento, dia_da_semana, id_condominio) VALUES (%s, %s, %s)", (data, dia_da_semana, id_condominio))
 
     # SELECTS
+    def select_registros_producao(self):
+        cursor = self.db.connect()
+        cursor.execute("SELECT * FROM registro_producao")
+        resultado = cursor.fetchall()
+        self.db.disconnect()
+        return resultado
+
+
     def select_ingredientes(_self):
         cursor = _self.db.connect()
         cursor.execute('SELECT id, nome, unidade FROM ingredientes')
