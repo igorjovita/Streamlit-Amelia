@@ -56,9 +56,9 @@ class Repository:
         cursor.execute('INSERT INTO condominio (nome, endereco, administrador, tel_administrador) VALUES (%s, %s, %s, %s)',(nome, endereco, nome_administrador, telefone_administrador))
         self.db.disconnect()
 
-    def insert_estoque_produto(self, id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data):
+    def insert_estoque_produto(self, id_produto, tipo_movimento, quantidade, custo_unitario, data, id_venda_producao):
         cursor = self.db.connect()
-        cursor.execute("INSERT INTO estoque_produtos (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data_movimento) VALUES (%s, %s, %s, %s, %s)", (id_produto, id_lote, tipo_movimento, quantidade, custo_unitario, data))
+        cursor.execute("INSERT INTO estoque_produtos (id_produto, tipo_movimento, quantidade, custo_unitario, data_movimento, id_venda_producao) VALUES (%s, %s, %s, %s, %s, %s)", (id_produto, tipo_movimento, quantidade, custo_unitario, data, id_venda_producao))
 
         self.db.disconnect()
 
@@ -75,7 +75,11 @@ class Repository:
             (id_produto, id_condominio, quantidade, preco_unitario, custo_unitario, lucro, data_venda) 
             VALUES (%s, %s, %s, %s, %s, %s, %s)""",(id_produto, id_condominio, quantidade, valor, custo, lucro, data))
 
+        id_venda = cursor.lastrowid()
         self.db.disconnect()
+
+        return id_venda
+
 
     
     def insert_agendamento_condominio(self, data, dia_da_semana, id_condominio):

@@ -108,40 +108,13 @@ class Vendas:
             id_produto = select_info_produto[index_produto][0]
             custo = float(select_info_produto[index_produto][2]) * quantidade_vendida
 
-            self.repository.insert_vendas(id_produto, id_condominio, quantidade_vendida, valor, custo, float(valor) - float(custo), data)
+            id_venda = self.repository.insert_vendas(id_produto, id_condominio, quantidade_vendida, valor, custo, float(valor) - float(custo), data)
         
-            lista_id_lote = self.obter_lote_e_quantidade(id_produto, quantidade_vendida)
-
-            for info in lista_id_lote:
-                self.insert_estoque_produto(id_produto, info[0], info[1], custo, data)
-
-    
-    def obter_lote_e_quantidade(self, id_produto, quantidade_vendida):
-        
-        lista_id_lote = []
-
-        select_quantidade_lote = self.repository.select_lote_produto(id_produto)
-
-        for lote in select_quantidade_lote:
-            quantidade_disponivel_lote = int(lote[1])
-            
-            if quantidade_disponivel_lote > 0:
-                
-                if quantidade_disponivel_lote >= quantidade_vendida:
-                    lista_id_lote.append((lote[0], quantidade_vendida))
-                    break
-                
-                else:
-                    lista_id_lote.append((lote[0], quantidade_disponivel_lote))
-                    quantidade_vendida -= quantidade_disponivel_lote 
-            
-
-        
-        return lista_id_lote
+            self.insert_estoque_produto(id_produto, quantidade_vendida, custo, data, id_venda)
 
 
-    def insert_estoque_produto(self, id_produto, id_lote, quantidade, custo, data):
-        self.repository.insert_estoque_produto(id_produto, id_lote, 'SAIDA', quantidade, custo, data)
+    def insert_estoque_produto(self, id_produto, quantidade, custo, data, id_venda):
+        self.repository.insert_estoque_produto(id_produto, 'SAIDA', quantidade, custo, data, id_venda)
     
 
 
