@@ -266,7 +266,8 @@ class Repository:
             SUM(v.lucro)
         FROM vendas as v
         JOIN condominio as c ON c.id = v.id_condominio
-        GROUP BY v.data_venda, c.nome """)
+        GROUP BY v.data_venda, c.nome 
+        ORDER BY v.data_venda asc""")
 
         resultado = cursor.fetchall()
         self.db.disconnect()
