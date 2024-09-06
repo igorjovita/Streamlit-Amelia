@@ -215,8 +215,7 @@ class Vendas:
                         preco_editado = st.session_state[f'preco_editar{i + 1}']
                         id_venda = st.session_state[f'id {i + 1}']
                         id_produto = select_info_produto[lista_produtos.index(produto_editado)][0]
-                        custo = select_info_produto[index_produto][2] 
-                        st.write(custo)
+                        st.write(quantidade_editada)
                         lucro = float(preco_editado) - float(custo)
 
 
