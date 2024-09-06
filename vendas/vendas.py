@@ -219,7 +219,7 @@ class Vendas:
                         lucro = float(preco_editado) - float(custo)
                         st.write(produto_editado)
                         st.write(select_info_produto)
-                        st.write(lista_produtos.index(produto_editado)
+                        st.write(lista_produtos.index(produto_editado))
                         st.write(id_produto)
                         #self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
                         #self.repository.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
