@@ -128,7 +128,7 @@ class Vendas:
         if 'df_status' not in st.session_state:
             st.session_state.df_status = None
        
-        df = pd.DataFrame(select_ultimas_vendas, columns=['Id', 'Data', 'Produto', 'Qtd', 'Preço'])
+        df = pd.DataFrame(select_ultimas_vendas, columns=['Id', 'Data', 'Lugar', 'Produto', 'Qtd', 'Preço'])
         lista_id = df['Id'].to_list()
         
         df = df.drop(columns='Id')
@@ -139,18 +139,24 @@ class Vendas:
 
         if len(st.session_state.df_status.loc[st.session_state.df_status['#']]) > 0:
             lista_datas = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Data'].to_list()
+            lista_lugar = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Lugar'].to_list()
             lista_produtos = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Produto'].to_list()
             lista_quantidades = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Qtd'].to_list()
             lista_preco = st.session_state.df_status.loc[st.session_state.df_status['#'], 'Preço'].to_list()
             index_selecionado = st.session_state.df_status.loc[st.session_state.df_status['#']].index.to_list()
             select_info_produto, lista_nome_produto = self.buscar_receita()
+            select_condominio, lista_nome_condominio = self.buscar_condominio()
 
             contador = 0
-            for data, nome_produto, quantidade, preco, index in zip(lista_datas, lista_produtos, lista_quantidades, lista_preco, index_selecionado):
+            for data, lugar,  nome_produto, quantidade, preco, index in zip(lista_datas, lista_lugar, lista_produtos, lista_quantidades, lista_preco, index_selecionado):
                 contador += 1
                 st.write(lista_id[index])
                 index_produto = lista_nome_produto.index(nome_produto)
+                index_lugar = lista_nome_condominio.index(lugar)
+
                 st.date_input('Data', value=data, key=f'data_editar{contador}')
+                
+                st.selectbox('Lugar', lista_nome_condominio, index=index_lugar, key=f'lugar_editar{contador}')
 
                 col1, col2, col3 = st.columns(3)
                 

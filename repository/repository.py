@@ -281,11 +281,13 @@ class Repository:
         select
             v.id,
             v.data_venda,
+            c.nome,
             p.nome,
             v.quantidade,
             v.preco_unitario
         from vendas as v
         join produtos as p ON p.id = v.id_produto
+        join condominio as c ON c.id = v.id_condominio
         order by v.data_venda desc limit 15""")
 
         resultado = cursor.fetchall()
