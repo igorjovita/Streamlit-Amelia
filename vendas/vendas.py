@@ -218,9 +218,9 @@ class Vendas:
                         custo = float(select_info_produto[index_produto][2]) * int(quantidade_editada)
                         lucro = float(preco_editado) - float(custo)
 
-
-                        self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
-                        self.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
+                        st.write(id_produto)
+                        #self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
+                        #self.repository.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
 
                     st.success('Dados alterados com sucesso')
 
