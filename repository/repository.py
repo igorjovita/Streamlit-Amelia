@@ -320,9 +320,22 @@ class Repository:
         cursor = self.db.connect()
         cursor.execute("UPDATE ingredientes SET custo_medio_por_medida = %s where id = %s", (custo_medida, id_ingrediente))
 
-    def update_venda(self, data_editada, id_produto, quantidade_editada, preco_editado, id_venda):
+    def update_venda(self, data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda):
         cursor = self.db.connect()
-        cursor.execute('UPDATE vendas SET data_venda = %s, id_produto = %s, quantidade = %s, preco_unitario = %s where id = %s', (data_editada, id_produto, quantidade_editada, preco_editado, id_venda))
+        cursor.execute('UPDATE vendas SET data_venda = %s, id_produto = %s, quantidade = %s, preco_unitario = %s, custo_unitario = %s, lucro = %s where id = %s', (data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda))
+
+
+    def update_estoque_produtos(self, id_produto, quantidade, data, custo, id_venda_producao):
+        cursor = self.db.connect()
+        cursor.execute('UPDATE estoque_produtos SET id_produto = %s, quantidade = %s, data_movimento = %s, custo_unitario = %s where id_venda_producao = %s', (id_produto, quantidade, data, custo, id_venda_producao))
+
+    def delete_vendas(self, id_venda):
+        cursor = self.db.connect()
+        cursor.execute('DELETE FROM vendas WHERE id = %s', (id_venda, ))
+    
+    def delete_estoque_produtos(self, id_venda):
+        cursor = self.db.connect()
+        cursor.execute('DELETE FROM estoque_produtos WHERE id_venda_producao = %s', (id_venda, ))
     
  
 

@@ -8,6 +8,8 @@ class Vendas:
         self.repository = repository
 
     def pagina_vendas(self):
+        # Exibição de itens na tela de vendas
+
         st.subheader('Vendas')
         self.historico_vendas()
         
@@ -24,6 +26,8 @@ class Vendas:
     
     
     def historico_vendas(self):
+        # Exibe uma tabela com o historico de vendas contendo data, nome do lugar, numero de vendas, faturamento e lucro
+
         historico = self.repository.select_historico_vendas()
         df = pd.DataFrame(historico, columns=['Data', 'Condominio', 'Vendas', 'Faturamento', 'Lucro'])
 
@@ -36,6 +40,8 @@ class Vendas:
 
     
     def formulario_vendas(self):
+
+        # Exibe os campos para o usuario lançar as vendas no sistema
 
         st.write('''<style>
         [data-testid="column"] {
@@ -53,7 +59,7 @@ class Vendas:
 
         escolha_condominio = st.selectbox('Condominio', lista_nome_condominio, index=None)
 
-        produtos_diferentes = st.text_input('Quantos produtos diferentes foram vendidos', value=0)
+        produtos_diferentes = st.text_input('Quantos produtos diferentes foram vendidos', value=0, key='produtos_diferentes')
         
         if produtos_diferentes != '0':
             with st.form('Formulario Venda'):
@@ -79,9 +85,21 @@ class Vendas:
 
                     st.success('Venda registrada com sucesso')
 
+                    self.resetar_formulario()
+
+    
+    def resetar_formulario(self):
+        
+        # Reseta o valor do campo de produtos diferentes pra 0 consequentemente resetando os demais campos
+
+        st.session_state['produtos_diferentes'] = 0
+
 
 
     def buscar_receita(self):
+
+        # Busca no sistema os nomes das receitas e retorna uma lista dos nomes e das informações
+
         select_info_produto = self.repository.select_nome_receitas()
 
         lista_nome_produto = [receita[1] for receita in select_info_produto]
@@ -89,6 +107,8 @@ class Vendas:
         return select_info_produto, lista_nome_produto
     
     def buscar_condominio(self):
+
+        # Busca no sistema os condominios cadastrados e retorna uma lista dos nomes e das informações
 
         select_condominio = self.repository.select_condominio()
 
@@ -173,19 +193,36 @@ class Vendas:
 
                 st.write('---')
 
-            if st.button('Atualizar'):
+            coluna1, coluna2 = st.columns(2)
 
-                for i in range(contador):
-                    data_editada = st.session_state[f'data_editar{i + 1}']
-                    produto_editado = st.session_state[f'produto_editar{i + 1}']
-                    quantidade_editada = st.session_state[f'quantidade_editar{i + 1}']
-                    preco_editado = st.session_state[f'preco_editar{i + 1}']
-                    id_venda = st.session_state[f'id {i + 1}']
-                    id_produto = select_info_produto[lista_produtos.index(produto_editado)][0]
+            with coluna1:
+                if st.button('Exluir'):
+                    
+                    for i in range(contador):
+                        id_venda = st.session_state[f'id {i + 1}']
+
+                        self.repository.detele_venda(id_venda)
+                        self.repository.delete_estoque_produtos(id_venda)
+
+                    st.success('Dados excluidos com sucesso!')
+
+            with coluna2:
+                if st.button('Atualizar'):
+
+                    for i in range(contador):
+                        data_editada = st.session_state[f'data_editar{i + 1}']
+                        produto_editado = st.session_state[f'produto_editar{i + 1}']
+                        quantidade_editada = st.session_state[f'quantidade_editar{i + 1}']
+                        preco_editado = st.session_state[f'preco_editar{i + 1}']
+                        id_venda = st.session_state[f'id {i + 1}']
+                        id_produto = select_info_produto[lista_produtos.index(produto_editado)][0]
+                        custo = float(select_info_produto[index_produto][2]) * quantidade_editada
+                        lucro = float(preco_editado) - float(custo)
 
 
-                    self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, id_venda)
+                        self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
+                        self.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
 
-                st.success('Dados alterados com sucesso')
+                    st.success('Dados alterados com sucesso')
 
 
