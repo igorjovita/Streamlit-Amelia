@@ -95,7 +95,6 @@ class Vendas:
         st.session_state['produtos_diferentes'] = 0
 
 
-
     def buscar_receita(self):
 
         # Busca no sistema os nomes das receitas e retorna uma lista dos nomes e das informações
