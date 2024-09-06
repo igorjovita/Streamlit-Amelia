@@ -215,12 +215,13 @@ class Vendas:
                         preco_editado = st.session_state[f'preco_editar{i + 1}']
                         id_venda = st.session_state[f'id {i + 1}']
                         id_produto = select_info_produto[lista_produtos.index(produto_editado)][0]
-                        custo = float(select_info_produto[index_produto][2]) * quantidade_editada
+                        custo = select_info_produto[index_produto][2] 
+                        st.write(custo)
                         lucro = float(preco_editado) - float(custo)
 
 
-                        self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
-                        self.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
+                        #self.repository.update_venda(data_editada, id_produto, quantidade_editada, preco_editado, custo, lucro, id_venda)
+                        #self.update_estoque_produtos(id_produto, quantidade, data, custo, id_venda)
 
                     st.success('Dados alterados com sucesso')
 
