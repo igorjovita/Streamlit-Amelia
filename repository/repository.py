@@ -301,7 +301,7 @@ class Repository:
         cursor.execute("""
         SELECT
             a.data_agendamento,
-            a.dia_da_semana
+            a.dia_da_semana,
             c.nome
         FROM agendamento_condominios as a
         JOIN condominio as c ON c.id = a.id_condominio""")
