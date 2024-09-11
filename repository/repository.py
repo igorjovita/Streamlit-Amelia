@@ -305,7 +305,7 @@ class Repository:
             c.nome
         FROM agendamento_condominios as a
         JOIN condominio as c ON c.id = a.id_condominio
-        WHERE DATE_FORMAT(a.data_agendamento, '%Y-%m) = %s""", (mes_ano, ))
+        WHERE DATE_FORMAT(a.data_agendamento, '%Y-%m') = %s""", (mes_ano, ))
 
         resultado = cursor.fetchall()
         self.db.disconnect()
