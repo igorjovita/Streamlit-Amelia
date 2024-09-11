@@ -46,7 +46,7 @@ class Ingredientes:
 
         for numero in range(int(itens_comprados)):
 
-            st.text(f'Ingrediente {numero)}')
+            st.text(f'Ingrediente {numero}')
 
             nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
 
