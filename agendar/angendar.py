@@ -33,9 +33,6 @@ class Agendar:
         if st.button('Agendar'):
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
             
-
-            # Configura o locale para português do Brasil
-            locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
             for dia in dias_agendar:
                 data = datetime.date(int(ano), int(mes), int(dia))
                 dia_da_semana = data.strftime('%A')
