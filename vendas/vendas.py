@@ -85,14 +85,6 @@ class Vendas:
 
                     st.success('Venda registrada com sucesso')
 
-                    self.resetar_formulario()
-
-    
-    def resetar_formulario(self):
-        
-        # Reseta o valor do campo de produtos diferentes pra 0 consequentemente resetando os demais campos
-
-        st.session_state['produtos_diferentes'] = 0
 
 
     def buscar_receita(self):
