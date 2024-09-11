@@ -46,6 +46,8 @@ class Ingredientes:
 
         for numero in range(int(itens_comprados)):
 
+            st.text(f'Ingrediente {numero)}')
+
             nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
 
             col1, col2 = st.columns(2)
@@ -57,6 +59,8 @@ class Ingredientes:
             with col2:
                 st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
                 st.text_input('Preço unitario', key=f'compra_preco_{numero}')
+            
+            st.write('---')
 
                 
 
