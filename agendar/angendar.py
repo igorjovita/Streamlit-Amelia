@@ -36,7 +36,7 @@ class Agendar:
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
 
             for dia in dias_agendar:
-                data = datetime.date(int(ano), int(mes), int(dia))
+                data = datetime.date(int(dia), int(mes), int(ano))
                 dia_da_semana = data.strftime('%A')
                 dia_da_semana_br = self.converte_dia(dia_da_semana)
                 
@@ -47,7 +47,7 @@ class Agendar:
                         st.error("Data já reservada")
                         break
                     
-            st.success('Datas agendadas com sucesso!')
+                st.success(f'{data} reservada com sucesso')
 
     
     def converte_dia(self, dia_da_semana):
