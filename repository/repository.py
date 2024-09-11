@@ -288,7 +288,7 @@ class Repository:
         from vendas as v
         join produtos as p ON p.id = v.id_produto
         join condominio as c ON c.id = v.id_condominio
-        order by v.data_venda desc limit 15""")
+        order by v.data_venda, v.id  """)
 
         resultado = cursor.fetchall()
         self.db.disconnect()

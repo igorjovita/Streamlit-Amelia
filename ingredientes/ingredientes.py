@@ -45,19 +45,20 @@ class Ingredientes:
         itens_comprados = st.text_input('Numero de itens comprados', value=0)
 
         for numero in range(int(itens_comprados)):
-            col1, col2, col3, col4 = st.columns(4)
 
+            nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
+
+            col1, col2 = st.columns()
+                
             with col1:
-                nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
-            
-            with col2:
-                marca = st.text_input('Marca', key=f'compra_marca_{numero}')
-            
-            with col3:
-                quantidade = st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
+                st.text_input('Marca', key=f'compra_marca_{numero}')
+                st.text_input('Gramas ou Ml em cada embalagem', key=f'unidade_{numero}')
 
-            with col4:
-                preco = st.text_input('Preço unitario', key=f'compra_preco_{numero}')
+            with col2:
+                st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
+                st.text_input('Preço unitario', key=f'compra_preco_{numero}')
+
+                
 
         if st.button('Lançar compra'):
             index = nome_mercados.index(mercado)
@@ -77,8 +78,22 @@ class Ingredientes:
             quantidade = st.session_state[f'compra_quantidade_{numero}']
             preco = st.session_state[f'compra_preco_{numero}']
             custo_medida = float(preco)/int(quantidade)
+            embalagem = st.session_state[f'unidade_{numero}']
+            
             index = nome_ingredientes.index(nome)
             id_ingrediente = nome_id_ingredientes[index][0]
+            
             self.repository.insert_compra_ingredientes(id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida)
             self.repository.update_custo_ingrediente(custo_medida, id_ingrediente)
-            
+
+
+    def tela_precos(self):
+            nome_id_mercados, nome_mercados, nome_id_ingredientes, nome_ingredientes = self.buscar_listas()
+
+            ingrediente = st.selectbox('Ingrediente', nome_ingredientes, index=None)
+
+            if st.button('Pesquiar'):
+                self.pesquisar_preco()
+
+    def pesquisar_preco(self):
+        self.repository.select_precos
