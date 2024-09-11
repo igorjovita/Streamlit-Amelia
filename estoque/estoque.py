@@ -27,12 +27,13 @@ class Estoque:
         
         receita = st.selectbox('Receita', lista_receita)
         
+        quantidade_feita = st.selectbox('Receita inteira ou meia receita?', ['Inteira', 'Meia Receita'], index=None)
         
         rendimento = st.text_input('Rendimento da producao')
 
         if st.button('Lançar no sistema'):
 
-            custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita)
+            custo_total, custo_unitario = self.preparar_dados_producao(lista_receita, select_receitas, rendimento, data, receita, quantidade_feita)
             
 
             st.warning(f'Custo Total : {custo_total} ')
@@ -40,12 +41,15 @@ class Estoque:
             st.success('Produção lançada com sucesso!')
 
     
-    def preparar_dados_producao(self, lista_receita, select_receitas, rendimento, data, receita):
+    def preparar_dados_producao(self, lista_receita, select_receitas, rendimento, data, receita, quantidade_feita):
 
         index = lista_receita.index(receita)
         id_produto = select_receitas[index][0]
 
         custo_total = self.repository.select_custo_receita_produto(id_produto)[0][0]
+        if quantidade_feita == 'Meia Receita':
+            custo_total = float(custo_total)/2
+            
         custo_unitario = float(custo_total)/int(rendimento)
         
         st.write(custo_total)
