@@ -58,7 +58,7 @@ class Ingredientes:
 
                 with col2:
                     st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
-                    st.text_input('Preço unitario', key=f'compra_preco_{numero}')
+                    st.text_input('Valor pago', key=f'compra_preco_{numero}')
                 
                 st.write('---')
 
@@ -77,17 +77,19 @@ class Ingredientes:
         
 
         for numero in range(int(itens_comprados)):
+            
             nome = st.session_state[f'compra_ing_{numero}']
             marca = st.session_state[f'compra_marca_{numero}']
             quantidade = st.session_state[f'compra_quantidade_{numero}']
             preco = st.session_state[f'compra_preco_{numero}']
-            custo_medida = float(preco)/int(quantidade)
             embalagem = st.session_state[f'unidade_{numero}']
+            
+            custo_medida = float(preco)/(int(embalagem) * int(quantidade))
             
             index = nome_ingredientes.index(nome)
             id_ingrediente = nome_id_ingredientes[index][0]
             
-            self.repository.insert_compra_ingredientes(id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida)
+            self.repository.insert_compra_ingredientes(id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida, embalagem)
             self.repository.update_custo_ingrediente(custo_medida, id_ingrediente)
 
 

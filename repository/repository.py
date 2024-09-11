@@ -21,11 +21,11 @@ class Repository:
 
         self.db.disconnect()
 
-    def insert_compra_ingredientes(self, id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida):
+    def insert_compra_ingredientes(self, id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida, embalagem):
 
         cursor = self.db.connect()
 
-        cursor.execute('INSERT INTO compra_ingredientes (id_ingrediente, id_mercado, marca, preco, quantidade, data_compra, preço_unidade) VALUES (%s, %s, %s, %s, %s, %s, %s)', (id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida))
+        cursor.execute('INSERT INTO compra_ingredientes (id_ingrediente, id_mercado, marca, preco, quantidade, data_compra, preço_unidade, embalagem) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', (id_ingrediente, id_mercado, marca, preco, quantidade, data, custo_medida, embalagem))
 
         self.db.disconnect()
 
