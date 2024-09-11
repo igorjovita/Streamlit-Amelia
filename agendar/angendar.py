@@ -42,7 +42,7 @@ class Agendar:
             st.success('Datas agendadas com sucesso!')
 
     
-    def converte_dia(dia_da_semana):
+    def converte_dia(self, dia_da_semana):
         dicionario_dias = {
             'Monday': 'Segunda-Feira',
             'Tuesday': 'Terça-Feira',
