@@ -32,15 +32,31 @@ class Agendar:
 
         if st.button('Agendar'):
             id_condominio = select_condominio[lista_nome_condominio.index(condominio)][0]
-            
+
             for dia in dias_agendar:
                 data = datetime.date(int(ano), int(mes), int(dia))
                 dia_da_semana = data.strftime('%A')
-                self.repository.insert_agendamento_condominio(data, dia_da_semana, id_condominio)
+                dia_da_semana_br = self.converte_dia(dia_da_semana)
+                self.repository.insert_agendamento_condominio(data, dia_da_semana_br, id_condominio)
             
             st.success('Datas agendadas com sucesso!')
 
     
+    def converte_dia(dia_da_semana):
+        dicionario_dias = {
+            'Monday': 'Segunda-Feira',
+            'Tuesday': 'Terça-Feira',
+            'Wednesday': 'Quarta-Feira',
+            'Thursday': 'Quinta-Feira',
+            'Friday': 'Sexta-Feira',
+            'Saturday': 'Sábado',
+            'Sunday': 'Domingo'}
+        
+        return dicionario_dias.get(dia_da_semana, 'Dia Invalido')
+
+
+
+
     def buscar_condominio(self):
 
         select_condominio = self.repository.select_condominio()
