@@ -85,7 +85,7 @@ class Agendar:
         if st.button('Pesquisar Agendamentos'):
 
             mes = int(meses.index(mes_escolhido)) + 1
-            if len(mes) == 1:
+            if mes <= 9:
                 mes = f'0{mes}'
 
             select_agendamentos = self.repository.select_agendamento_condominio(f'{ano_escolido}-{mes}')
