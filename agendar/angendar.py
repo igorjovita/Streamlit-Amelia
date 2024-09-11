@@ -44,9 +44,9 @@ class Agendar:
                     self.repository.insert_agendamento_condominio(data, dia_da_semana_br, id_condominio)
                 except mysql.connector.Error as err:
                     if err.errno == 1062:
-                        print("Erro: Entrada duplicada.")
-                    else:
-                        print(f"Erro: {err}")
+                        st.error("Data já reservada")
+                        break
+                    
             st.success('Datas agendadas com sucesso!')
 
     
