@@ -295,7 +295,7 @@ class Repository:
         return resultado
     
 
-    def select_agendamento_condominio(self):
+    def select_agendamento_condominio(self, mes_ano):
         cursor = self.db.connect()
 
         cursor.execute("""
@@ -304,7 +304,8 @@ class Repository:
             a.dia_da_semana,
             c.nome
         FROM agendamento_condominios as a
-        JOIN condominio as c ON c.id = a.id_condominio""")
+        JOIN condominio as c ON c.id = a.id_condominio
+        WHERE DATE_FORMAT(a.data_agendamento, '%Y-%m) = %s""", (mes_ano, ))
 
         resultado = cursor.fetchall()
         self.db.disconnect()

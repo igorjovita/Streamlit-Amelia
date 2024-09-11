@@ -75,13 +75,24 @@ class Agendar:
         
     
     def buscar_agendamentos(self):
-        select_agendamentos = self.repository.select_agendamento_condominio()
+        meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
-        df = pd.DataFrame(select_agendamentos, columns=['Data', 'Dia', 'Condominio'])
+        lista_ano = ['2024', '2025', '2026', '2027']
 
-        df['Data'] = pd.to_datetime(df['Data'])
+        mes_escolhido = st.selectbox('Escolha o mês', meses, index=None)
+        ano_escolido = st.selectbox('Escolha o ano', lista_ano, index=None)
 
-        df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
+        if st.button('Pesquisar Agendamentos'):
+
+            mes = int(meses.index(mes_escolhido)) + 1
+
+            select_agendamentos = self.repository.select_agendamento_condominio(f'{ano_escolido}-{mes}')
+
+            df = pd.DataFrame(select_agendamentos, columns=['Data', 'Dia', 'Condominio'])
+
+            df['Data'] = pd.to_datetime(df['Data'])
+
+            df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
 
 
-        st.dataframe(df, hide_index=True, use_container_width=True)
+            st.dataframe(df, hide_index=True, use_container_width=True)
