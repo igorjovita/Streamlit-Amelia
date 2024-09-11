@@ -44,33 +44,33 @@ class Ingredientes:
 
         itens_comprados = st.text_input('Numero de itens comprados', value=0)
 
-        for numero in range(int(itens_comprados)):
+        if itens_comprados != '0':
 
-            st.text(f'Ingrediente {numero}')
+            for numero in range(int(itens_comprados)):
 
-            nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
+                nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
 
-            col1, col2 = st.columns(2)
+                col1, col2 = st.columns(2)
+                    
+                with col1:
+                    st.text_input('Marca', key=f'compra_marca_{numero}')
+                    st.text_input('Gramas ou Ml em cada embalagem', key=f'unidade_{numero}')
+
+                with col2:
+                    st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
+                    st.text_input('Preço unitario', key=f'compra_preco_{numero}')
                 
-            with col1:
-                st.text_input('Marca', key=f'compra_marca_{numero}')
-                st.text_input('Gramas ou Ml em cada embalagem', key=f'unidade_{numero}')
+                st.write('---')
 
-            with col2:
-                st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
-                st.text_input('Preço unitario', key=f'compra_preco_{numero}')
-            
-            st.write('---')
+                    
 
-                
+            if st.button('Lançar compra'):
+                index = nome_mercados.index(mercado)
+                id_mercado = nome_id_mercados[index][0]
 
-        if st.button('Lançar compra'):
-            index = nome_mercados.index(mercado)
-            id_mercado = nome_id_mercados[index][0]
+                self.lancar_compra(data, itens_comprados, id_mercado, nome_id_ingredientes, nome_ingredientes)
 
-            self.lancar_compra(data, itens_comprados, id_mercado, nome_id_ingredientes, nome_ingredientes)
-
-            st.success('Compra registrada com sucesso!!')
+                st.success('Compra registrada com sucesso!!')
 
 
     def lancar_compra(self, data, itens_comprados, id_mercado, nome_id_ingredientes, nome_ingredientes):
