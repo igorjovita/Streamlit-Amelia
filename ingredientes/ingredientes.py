@@ -48,7 +48,7 @@ class Ingredientes:
 
             nome = st.selectbox('Ingrediente', nome_ingredientes, key=f'compra_ing_{numero}', index=None)
 
-            col1, col2 = st.columns()
+            col1, col2 = st.columns(2)
                 
             with col1:
                 st.text_input('Marca', key=f'compra_marca_{numero}')
