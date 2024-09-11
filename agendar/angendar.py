@@ -2,6 +2,8 @@ import streamlit as st
 import datetime
 import pandas as pd
 import locale
+import mysql.connector
+from mysql.connector import Error
 class Agendar:
 
     def __init__(self, repository) -> None:
@@ -37,8 +39,14 @@ class Agendar:
                 data = datetime.date(int(ano), int(mes), int(dia))
                 dia_da_semana = data.strftime('%A')
                 dia_da_semana_br = self.converte_dia(dia_da_semana)
-                self.repository.insert_agendamento_condominio(data, dia_da_semana_br, id_condominio)
-            
+                
+                try:
+                    self.repository.insert_agendamento_condominio(data, dia_da_semana_br, id_condominio)
+                except mysql.connector.Error as err:
+                    if err.errno == 1062:
+                        print("Erro: Entrada duplicada.")
+                    else:
+                        print(f"Erro: {err}")
             st.success('Datas agendadas com sucesso!')
 
     
