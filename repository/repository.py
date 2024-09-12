@@ -177,36 +177,6 @@ class Repository:
         return resultado
         
     
-
-    def select_quantidade_estoque(self):
-        cursor = self.db.connect()
-
-        cursor.execute("""
-        SELECT
-            subquery.id_lote,
-            p.nome,
-            subquery.quantidade,
-            p.custo_unidade,
-            rp.data_producao,
-            rp.data_validade
-        FROM (
-            SELECT
-                rp.id_lote,
-                rp.id_produto,
-                SUM(CASE WHEN e.tipo_movimento = 'ENTRADA' THEN e.quantidade ELSE -e.quantidade END) as quantidade
-            FROM registros_producao as rp
-            JOIN estoque_produtos as e ON e.id_produto = rp.id_produto AND e.id_lote = rp.id_lote
-            GROUP BY rp.id_lote, rp.id_produto
-        ) AS subquery
-        JOIN produtos as p ON p.id = subquery.id_produto
-        JOIN registros_producao as rp ON rp.id_lote = subquery.id_lote AND rp.id_produto = subquery.id_produto
-        ORDER BY subquery.id_produto;
-
-        """)
-
-        resultado = cursor.fetchall()
-        self.db.disconnect()
-        return resultado
     
     def select_estoque(self):
         cursor = self.db.connect()
@@ -225,6 +195,7 @@ class Repository:
         self.db.disconnect()
         return resultado
     
+    
     def select_custo_receita_produto(self, id_produto):
         cursor = self.db.connect()
 
@@ -234,20 +205,6 @@ class Repository:
         from ingredientes_receita as r
         join ingredientes as i ON r.id_ingrediente = i.id
         where r.id_produto = %s""", (id_produto, ))
-        
-        resultado = cursor.fetchall()
-        self.db.disconnect()
-        return resultado
-    
-
-    def select_lote_produto(self, id_produto):
-        cursor = self.db.connect()
-        cursor.execute("""
-        SELECT 
-            id_lote,
-            CASE WHEN tipo_movimento = 'ENTRADA' THEN quantidade ELSE -quantidade END as quantidade
-        FROM estoque_produtos 
-        WHERE id_produto = %s""", (id_produto, ))
         
         resultado = cursor.fetchall()
         self.db.disconnect()
@@ -311,7 +268,29 @@ class Repository:
         resultado = cursor.fetchall()
         self.db.disconnect()
         return resultado
-            
+    
+    def select_preco_ingrediente(self, id_ingrediente):
+        cursor = self.db.connect()
+        cursor.execute("""
+        SELECT 
+            i.nome,
+            ci.marca,
+            ci.quantidade,
+            ci.embalagem,
+            i.unidade,
+            ci.preco,
+            m.nome
+        FROM compra_ingredientes as ci
+        JOIN ingredientes as i ON i.id = ci.id_ingrediente
+        JOIN mercado as m ON m.id = ci.id_mercado
+        WHERE ci.id_ingrediente = %s""", (id_ingrediente, ))
+
+        
+        resultado = cursor.fetchall()
+        self.db.disconnect()
+        return resultado
+
+
 
     def update_custos_receita(self, custo_total, custo_unitario, id_produto):
 

@@ -54,7 +54,7 @@ class Ingredientes:
                     
                 with col1:
                     st.text_input('Marca', key=f'compra_marca_{numero}')
-                    st.text_input('Gramas ou Ml em cada embalagem', key=f'unidade_{numero}')
+                    st.text_input('Gramas ou Ml em cada embalagem', key=f'unidade_{numero}', help='Se o produto for registrado em unidade ou caixa coloque 1 neste campo')
 
                 with col2:
                     st.text_input('Quantidade comprada', key=f'compra_quantidade_{numero}')
@@ -94,12 +94,32 @@ class Ingredientes:
 
 
     def tela_precos(self):
-            nome_id_mercados, nome_mercados, nome_id_ingredientes, nome_ingredientes = self.buscar_listas()
+            _, _, nome_id_ingredientes, nome_ingredientes = self.buscar_listas()
 
             ingrediente = st.selectbox('Ingrediente', nome_ingredientes, index=None)
 
             if st.button('Pesquiar'):
-                self.pesquisar_preco()
+                
+                id_ingrediente = nome_id_ingredientes[nome_ingredientes.index(ingrediente)][0]
+                
+                select_preco = self.pesquisar_preco(id_ingrediente)
 
-    def pesquisar_preco(self):
-        self.repository.select_precos
+    def pesquisar_preco(self, id_ingrediente):
+        self.repository.select_preco_ingrediente(id_ingrediente)
+
+    def exibir_precos(select_preco):
+        for item in select_preco:
+            marca = item[1]
+            quantidade = item[2]
+            embalagem = item[3]
+            unidade = item[4]
+            preco = item[5]
+            mercado = item[6]
+
+            if int(quantidade) > 1:
+                valor_unitario = int(preco)/int(quantidade)
+
+            else:
+                valor_unitario = int(preco)
+
+            st.text(f'{quantidade} unidade de {embalagem} {unidade} por R$ {valor_unitario} da marca {marca} no mercado {mercado}')
