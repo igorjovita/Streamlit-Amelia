@@ -1,5 +1,5 @@
 import streamlit as st
-
+from babel.numbers import format_currency
 class Ingredientes:
 
     def __init__(self, repository) -> None:
@@ -130,9 +130,11 @@ class Ingredientes:
             mercado = item[6]
 
             if int(quantidade) > 1:
-                valor_unitario = int(preco)/int(quantidade)
+                valor_unitario = float(preco)/int(quantidade)
 
             else:
-                valor_unitario = int(preco)
+                valor_unitario = float(preco)
 
-            st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por R$ {valor_unitario} cada da marca {marca} no mercado {mercado}')
+            valor_unitario = format_currency(valor_unitario, 'BRL', locale='pt_BR')
+
+            st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por {valor_unitario} cada da marca {marca} no mercado {mercado}')
