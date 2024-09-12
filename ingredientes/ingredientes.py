@@ -138,7 +138,10 @@ class Ingredientes:
 
             valor_unitario = format_currency(valor_unitario, 'BRL', locale='pt_BR')
 
-            if unidade == 'caixa' or unidade == 'Unidade':
+            if item[0] == 'Maracujá':
+                 st.text(f'{int(quantidade)} {unidade} por {valor_unitario} no mercado {mercado}')
+
+            elif unidade == 'caixa' or unidade == 'Unidade':
 
                 st.text(f'{int(quantidade)} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
             
