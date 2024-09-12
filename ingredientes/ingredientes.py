@@ -139,7 +139,7 @@ class Ingredientes:
             valor_unitario = format_currency(valor_unitario, 'BRL', locale='pt_BR')
 
             if item[0] == 'Maracujá':
-                 st.text(f'{int(quantidade)} {unidade} por {valor_unitario} no mercado {mercado}')
+                 st.text(f'{int(quantidade)} {unidade} de polpa da fruta por {valor_unitario} no mercado {mercado}')
 
             elif unidade == 'caixa' or unidade == 'Unidade':
 
