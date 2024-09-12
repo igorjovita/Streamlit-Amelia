@@ -113,6 +113,8 @@ class Ingredientes:
                 
                 select_preco = self.pesquisar_preco(id_ingrediente)
 
+                st.write(select_preco)
+
                 self.exibir_precos(select_preco)
 
     def pesquisar_preco(self, id_ingrediente):
