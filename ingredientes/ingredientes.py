@@ -129,7 +129,8 @@ class Ingredientes:
             preco = item[5]
             mercado = item[6]
 
-            if int(quantidade) > 1:
+
+            if int(quantidade) > 1 and item[0] != 'Maracujá':
                 valor_unitario = float(preco)/int(quantidade)
 
             else:
@@ -142,4 +143,5 @@ class Ingredientes:
                 st.text(f'{int(quantidade)} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
             
             else:
+
                 st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
