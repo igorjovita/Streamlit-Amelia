@@ -118,7 +118,7 @@ class Ingredientes:
     def pesquisar_preco(self, id_ingrediente):
         self.repository.select_preco_ingrediente(id_ingrediente)
 
-    def exibir_precos(select_preco):
+    def exibir_precos(self, select_preco):
         for item in select_preco:
             marca = item[1]
             quantidade = item[2]
