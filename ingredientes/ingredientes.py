@@ -137,4 +137,9 @@ class Ingredientes:
 
             valor_unitario = format_currency(valor_unitario, 'BRL', locale='pt_BR')
 
-            st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
+            if unidade == 'caixa' or unidade == 'Unidade':
+
+                st.text(f'{int(quantidade)} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
+            
+            else:
+                st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por {valor_unitario} cada \nda marca {marca} no mercado {mercado}')
