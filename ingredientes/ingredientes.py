@@ -107,7 +107,7 @@ class Ingredientes:
 
             ingrediente = st.selectbox('Ingrediente', nome_ingredientes, index=None)
 
-            if st.button('Pesquiar'):
+            if st.button('Pesquisar'):
                 
                 id_ingrediente = nome_id_ingredientes[nome_ingredientes.index(ingrediente)][0]
                 
@@ -118,7 +118,7 @@ class Ingredientes:
                 self.exibir_precos(select_preco)
 
     def pesquisar_preco(self, id_ingrediente):
-        self.repository.select_preco_ingrediente(id_ingrediente)
+        return self.repository.select_preco_ingrediente(id_ingrediente)
 
     def exibir_precos(self, select_preco):
         for item in select_preco:
