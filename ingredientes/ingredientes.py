@@ -135,4 +135,4 @@ class Ingredientes:
             else:
                 valor_unitario = int(preco)
 
-            st.text(f'{quantidade} unidade de {embalagem} {unidade} por R$ {valor_unitario} da marca {marca} no mercado {mercado}')
+            st.text(f'{int(quantidade)} unidade de {embalagem} {unidade} por R$ {valor_unitario} cada da marca {marca} no mercado {mercado}')
