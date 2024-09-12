@@ -32,7 +32,15 @@ class Ingredientes:
 
 
     def pagina_compras(self):
+        self.tela_compra()
 
+        st.write('---')
+
+        self.tela_precos()
+
+
+    def tela_compra(self):
+        
         st.subheader('Lançar compra')
 
         nome_id_mercados, nome_mercados, nome_id_ingredientes, nome_ingredientes = self.buscar_listas()
