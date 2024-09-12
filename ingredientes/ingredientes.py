@@ -113,7 +113,7 @@ class Ingredientes:
                 
                 select_preco = self.pesquisar_preco(id_ingrediente)
 
-                st.write(select_preco)
+                st.write(id_ingrediente)
 
                 self.exibir_precos(select_preco)
 
