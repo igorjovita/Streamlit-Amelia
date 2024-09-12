@@ -102,6 +102,7 @@ class Ingredientes:
 
 
     def tela_precos(self):
+            st.subheader('Historico de preços')
             _, _, nome_id_ingredientes, nome_ingredientes = self.buscar_listas()
 
             ingrediente = st.selectbox('Ingrediente', nome_ingredientes, index=None)
@@ -111,6 +112,8 @@ class Ingredientes:
                 id_ingrediente = nome_id_ingredientes[nome_ingredientes.index(ingrediente)][0]
                 
                 select_preco = self.pesquisar_preco(id_ingrediente)
+
+                self.exibir_precos(select_preco)
 
     def pesquisar_preco(self, id_ingrediente):
         self.repository.select_preco_ingrediente(id_ingrediente)
